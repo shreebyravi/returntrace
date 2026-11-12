@@ -1,0 +1,20 @@
+{
+ "return_id": "RET-2001",
+ "name": "Duplicate courier event with a different weight",
+ "expected_action": "Request more evidence",
+ "expected": "Finds two PICKED_UP events with different weights, keeps both, and asks the courier which is right before any refund decision. Does not treat it as the customer's problem.",
+ "overlay": {
+  "extraEvents": [
+   {
+    "event_id": "CE-901",
+    "tracking_id": "TRK-R2001",
+    "event_type": "PICKED_UP",
+    "timestamp": "2026-11-03T06:12:00Z",
+    "location": "Customer address, Dubai",
+    "weight_kg": "0.64",
+    "note": "Re-scan"
+   }
+  ]
+ },
+ "id": "S-03"
+}

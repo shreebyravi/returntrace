@@ -1,0 +1,68 @@
+event_id,tracking_id,event_type,timestamp,location,weight_kg,note
+CE-001,TRK-O2001,DELIVERED_TO_CUSTOMER,2026-10-28T15:20:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-002,TRK-O2002,DELIVERED_TO_CUSTOMER,2026-10-20T13:05:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-003,TRK-O2003,DELIVERED_TO_CUSTOMER,2026-10-27T17:45:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-004,TRK-O2004,DELIVERED_TO_CUSTOMER,2026-10-24T12:10:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-005,TRK-O2005,DELIVERED_TO_CUSTOMER,2026-10-04T16:30:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-006,TRK-O2006,DELIVERED_TO_CUSTOMER,2026-10-29T11:50:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-007,TRK-O2007,DELIVERED_TO_CUSTOMER,2026-10-26T14:40:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-008,TRK-O2008,DELIVERED_TO_CUSTOMER,2026-09-29T10:25:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-009,TRK-O2009,DELIVERED_TO_CUSTOMER,2026-11-01T12:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-010,TRK-O2010,DELIVERED_TO_CUSTOMER,2026-10-25T15:35:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-011,TRK-O2011,DELIVERED_TO_CUSTOMER,2026-10-12T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-012,TRK-O2012,DELIVERED_TO_CUSTOMER,2026-10-13T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-013,TRK-O2013,DELIVERED_TO_CUSTOMER,2026-10-14T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-014,TRK-O2014,DELIVERED_TO_CUSTOMER,2026-10-15T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-015,TRK-O2015,DELIVERED_TO_CUSTOMER,2026-10-16T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-016,TRK-O2016,DELIVERED_TO_CUSTOMER,2026-10-17T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-017,TRK-O2017,DELIVERED_TO_CUSTOMER,2026-10-18T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-018,TRK-O2018,DELIVERED_TO_CUSTOMER,2026-10-19T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-019,TRK-O2019,DELIVERED_TO_CUSTOMER,2026-10-20T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-020,TRK-O2020,DELIVERED_TO_CUSTOMER,2026-10-21T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-021,TRK-O2021,DELIVERED_TO_CUSTOMER,2026-10-22T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-022,TRK-O2022,DELIVERED_TO_CUSTOMER,2026-10-23T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-023,TRK-O2023,DELIVERED_TO_CUSTOMER,2026-10-24T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-024,TRK-O2024,DELIVERED_TO_CUSTOMER,2026-10-25T14:00:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-025,TRK-O2048,DELIVERED_TO_CUSTOMER,2026-10-26T14:05:00+04:00,"Customer address, Dubai",,Signed by recipient
+CE-026,TRK-R2001,PICKUP_SCHEDULED,2026-11-02T10:00:00Z,"Customer address, Dubai",,
+CE-027,TRK-R2001,PICKED_UP,2026-11-03T06:10:00Z,"Customer address, Dubai",1.12,Parcel sealed at pickup: yes
+CE-028,TRK-R2001,ARRIVED_AT_HUB,2026-11-03T11:40:00Z,"Pelvaro hub, Al Quoz",,
+CE-029,TRK-R2001,DELIVERED_TO_WAREHOUSE,2026-11-04T05:30:00Z,"Dunvale Returns Centre, Dubai South",,Proof of delivery: Dock 2 signature
+CE-030,TRK-R2002,PICKUP_SCHEDULED,2026-10-30T08:00:00Z,"Customer address, Dubai",,
+CE-031,TRK-R2002,PICKED_UP,2026-10-31T07:45:00Z,"Customer address, Dubai",4.86,Parcel sealed at pickup: yes
+CE-032,TRK-R2002,ARRIVED_AT_HUB,2026-10-31T12:30:00Z,"Pelvaro hub, Al Quoz",,
+CE-033,TRK-R2002,DELIVERED_TO_WAREHOUSE,2026-11-01T08:15:00Z,"Dunvale Returns Centre, Dubai South",,Proof of delivery: Dock 2 signature
+CE-034,TRK-R2003,PICKUP_SCHEDULED,2026-10-30T09:00:00Z,"Customer address, Dubai",,
+CE-035,TRK-R2003,PICKED_UP,2026-10-31T05:00:00Z,"Customer address, Dubai",0.48,Parcel sealed at pickup: yes
+CE-036,TRK-R2003,ARRIVED_AT_HUB,2026-10-31T10:20:00Z,"Pelvaro hub, Al Quoz",,
+CE-037,TRK-R2003,DELIVERED_TO_WAREHOUSE,2026-11-01T07:10:00Z,"Dunvale Returns Centre, Dubai South",,Proof of delivery: Dock 2 signature
+CE-038,TRK-R2004,PICKUP_SCHEDULED,2026-10-28T08:00:00Z,"Customer address, Dubai",,
+CE-039,TRK-R2004,PICKED_UP,2026-10-29T06:30:00Z,"Customer address, Dubai",2.34,Parcel sealed at pickup: yes
+CE-040,TRK-R2004,ARRIVED_AT_HUB,2026-10-29T12:00:00Z,"Pelvaro hub, Al Quoz",,
+CE-041,TRK-R2004,DELIVERED_TO_WAREHOUSE,2026-10-30T06:50:00Z,"Dunvale Returns Centre, Dubai South",,Proof of delivery: Dock 2 signature
+CE-042,TRK-R2005,PICKUP_SCHEDULED,2026-11-03T09:00:00Z,"Customer address, Dubai",,
+CE-043,TRK-R2005,PICKED_UP,2026-11-04T05:40:00Z,"Customer address, Dubai",2.24,Parcel sealed at pickup: yes
+CE-044,TRK-R2005,ARRIVED_AT_HUB,2026-11-04T10:15:00Z,"Pelvaro hub, Al Quoz",,
+CE-045,TRK-R2005,DELIVERED_TO_WAREHOUSE,2026-11-05T06:05:00Z,"Dunvale Returns Centre, Dubai South",,Proof of delivery: Dock 2 signature
+CE-046,TRK-R2006,PICKUP_SCHEDULED,2026-11-01T14:00:00Z,"Customer address, Dubai",,
+CE-047,TRK-R2006,PICKED_UP,2026-11-02T06:20:00Z,"Customer address, Dubai",0.81,Parcel sealed at pickup: yes
+CE-048,TRK-R2006,ARRIVED_AT_HUB,2026-11-02T11:00:00Z,"Pelvaro hub, Al Quoz",,
+CE-049,TRK-R2006,DELIVERED_TO_WAREHOUSE,2026-11-03T05:55:00Z,"Dunvale Returns Centre, Dubai South",,Proof of delivery: Dock 2 signature
+CE-050,TRK-R2007,PICKUP_SCHEDULED,2026-10-29T10:00:00Z,"Customer address, Dubai",,
+CE-051,TRK-R2007,PICKED_UP,2026-10-30T07:05:00Z,"Customer address, Dubai",0.97,Parcel sealed at pickup: yes
+CE-052,TRK-R2007,ARRIVED_AT_HUB,2026-10-30T12:40:00Z,"Pelvaro hub, Al Quoz",,
+CE-053,TRK-R2007,DELIVERED_TO_WAREHOUSE,2026-11-02T06:40:00Z,"Dunvale Returns Centre, Dubai South",,"Proof of delivery: Dock 3, signature 'RC'"
+CE-054,TRK-R2008,PICKUP_SCHEDULED,2026-10-10T08:00:00Z,"Customer address, Dubai",,
+CE-055,TRK-R2008,PICKED_UP,2026-10-11T06:00:00Z,"Customer address, Dubai",0.22,Parcel sealed at pickup: yes
+CE-056,TRK-R2008,ARRIVED_AT_HUB,2026-10-11T11:10:00Z,"Pelvaro hub, Al Quoz",,
+CE-057,TRK-R2008,DELIVERED_TO_WAREHOUSE,2026-10-12T05:45:00Z,"Dunvale Returns Centre, Dubai South",,Proof of delivery: Dock 2 signature
+CE-058,TRK-R2009,PICKUP_SCHEDULED,2026-11-02T08:00:00Z,"Customer address, Dubai",,
+CE-059,TRK-R2009,PICKUP_ATTEMPTED,2026-11-03T07:30:00Z,"Customer address, Dubai",,Customer asked to reschedule
+CE-060,TRK-R2010,PICKUP_SCHEDULED,2026-10-30T11:00:00Z,"Customer address, Dubai",,
+CE-061,TRK-R2010,PICKED_UP,2026-10-31T06:35:00Z,"Customer address, Dubai",1.42,Parcel sealed at pickup: yes
+CE-062,TRK-R2010,ARRIVED_AT_HUB,2026-10-31T11:50:00Z,"Pelvaro hub, Al Quoz",,
+CE-063,TRK-R2010,DELIVERED_TO_WAREHOUSE,2026-11-01T06:20:00Z,"Dunvale Returns Centre, Dubai South",,Proof of delivery: Dock 2 signature
+CE-064,TRK-R2048,PICKUP_SCHEDULED,2026-10-30T09:00:00Z,"Customer address, Dubai",,
+CE-065,TRK-R2048,PICKED_UP,2026-10-31T07:20:00Z,"Customer address, Dubai",0.82,Parcel sealed at pickup: yes
+CE-066,TRK-R2048,ARRIVED_AT_HUB,2026-10-31T12:05:00Z,"Pelvaro hub, Al Quoz",,
+CE-067,TRK-R2048,DELIVERED_TO_WAREHOUSE,2026-11-01T06:00:00Z,"Dunvale Returns Centre, Dubai South",,Proof of delivery: Dock 2 signature

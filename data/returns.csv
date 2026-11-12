@@ -1,0 +1,12 @@
+return_id,order_id,reason,requested_at,return_tracking,customer_statement_id,status
+RET-2001,ORD-2001,Changed my mind,2026-11-02T09:00:00+04:00,TRK-R2001,MSG-001,Received at warehouse
+RET-2002,ORD-2002,Stops heating after a few minutes,2026-10-29T19:30:00+04:00,TRK-R2002,MSG-003,Received at warehouse
+RET-2003,ORD-2003,Strap broke on day two,2026-10-30T08:15:00+04:00,TRK-R2003,MSG-004,Inspected
+RET-2004,ORD-2004,Motor makes a burning smell,2026-10-27T21:00:00+04:00,TRK-R2004,MSG-005,Inspected
+RET-2005,ORD-2005,Laptop no longer turns on,2026-11-03T10:40:00+04:00,TRK-R2005,MSG-006,Inspected
+RET-2006,ORD-2006,Sound cuts out in the left ear,2026-11-01T16:20:00+04:00,TRK-R2006,MSG-007,Inspected
+RET-2007,ORD-2007,Screen has dead pixels,2026-10-29T12:00:00+04:00,TRK-R2007,MSG-009,Delivered to warehouse (courier)
+RET-2008,ORD-2008,Right earbud will not pair,2026-10-09T18:50:00+04:00,TRK-R2008,MSG-011,Inspected
+RET-2009,ORD-2009,Damaged on arrival,2026-11-02T10:10:00+04:00,TRK-R2009,MSG-012,Awaiting pickup
+RET-2010,ORD-2010,Picture is blurry at all settings,2026-10-30T13:30:00+04:00,TRK-R2010,MSG-014,Inspected
+RET-2048,ORD-2048,Not working properly,2026-10-30T10:30:00+04:00,TRK-R2048,MSG-017,Inspected

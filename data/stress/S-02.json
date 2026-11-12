@@ -1,0 +1,18 @@
+{
+ "return_id": "RET-2009",
+ "name": "Customer reply in Arabic",
+ "expected_action": "Request more evidence",
+ "expected": "Reads the Arabic message (kettle lid hinge cracked, photo will follow), records the description, and still asks for the photo the policy requires.",
+ "overlay": {
+  "extraMessages": [
+   {
+    "message_id": "MSG-902",
+    "case_id": "RET-2009",
+    "sender": "Customer",
+    "sent_at": "2026-11-02T12:30:00+04:00",
+    "text": "مفصلة غطاء الغلاية مكسورة عند الاستلام، والعلبة كانت مضغوطة. سأرسل صورة لاحقاً."
+   }
+  ]
+ },
+ "id": "S-02"
+}

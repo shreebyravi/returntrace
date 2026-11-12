@@ -1,0 +1,26 @@
+order_id,customer_ref,seller,sku,product,category,amount_aed,ordered_at,delivered_at,dispatch_serial,dispatch_weight_kg,dispatch_scan_id,outbound_tracking,dispatch_note
+ORD-2001,CUS-4410,Brightmere Electronics,SPK-200,Bluetooth speaker,Electronics,349.00,2026-10-26T18:02:00+04:00,2026-10-28T15:20:00+04:00,SPK200-11842,1.10,EV-D2001,TRK-O2001,Serial scanned at packing
+ORD-2002,CUS-4411,Hollin Home,AF-55,Air fryer 5.5 L,Home,459.00,2026-10-17T11:40:00+04:00,2026-10-20T13:05:00+04:00,,4.80,,TRK-O2002,Not a serialised item
+ORD-2003,CUS-4412,Tarvel Gadgets,SW-40,Smartwatch,Electronics,899.00,2026-10-25T09:12:00+04:00,2026-10-27T17:45:00+04:00,SW40-60219,0.46,EV-D2003,TRK-O2003,Serial scanned at packing
+ORD-2004,CUS-4413,Hollin Home,BL-7,Blender,Home,279.00,2026-10-22T20:30:00+04:00,2026-10-24T12:10:00+04:00,,2.30,,TRK-O2004,Not a serialised item
+ORD-2005,CUS-4414,Brightmere Electronics,LT-14,Laptop 14-inch,Electronics,3499.00,2026-10-02T10:05:00+04:00,2026-10-04T16:30:00+04:00,LT14-90551,2.20,EV-D2005,TRK-O2005,Serial scanned at packing
+ORD-2006,CUS-4415,Kestrova Audio,WH-900,Wireless headphones,Electronics,1299.00,2026-10-27T13:15:00+04:00,2026-10-29T11:50:00+04:00,WH900-55120,0.80,EV-D2006,TRK-O2006,Serial scanned at packing
+ORD-2007,CUS-4416,Tarvel Gadgets,TB-10,Tablet 10-inch,Electronics,1899.00,2026-10-24T16:00:00+04:00,2026-10-26T14:40:00+04:00,TB10-33710,0.95,EV-D2007,TRK-O2007,Serial scanned at packing
+ORD-2008,CUS-4417,Kestrova Audio,EB-3,Wireless earbuds,Electronics,499.00,2026-09-27T21:10:00+04:00,2026-09-29T10:25:00+04:00,EB3-40882,0.21,EV-D2008,TRK-O2008,Serial scanned at packing
+ORD-2009,CUS-4418,Hollin Home,KT-2,Electric kettle,Home,189.00,2026-10-30T08:45:00+04:00,2026-11-01T12:00:00+04:00,,1.40,,TRK-O2009,Not a serialised item
+ORD-2010,CUS-4419,Tarvel Gadgets,PJ-5,Portable projector,Electronics,1150.00,2026-10-23T19:20:00+04:00,2026-10-25T15:35:00+04:00,PJ5-30417,1.40,EV-D2010,TRK-O2010,"Serial scanned at packing. Box contents: projector, remote control, power adapter, HDMI cable"
+ORD-2011,CUS-4420,Hollin Home,TW-4,Towel set,Home,129.00,2026-10-10T12:00:00+04:00,2026-10-12T14:00:00+04:00,,0.90,,TRK-O2011,No return requested
+ORD-2012,CUS-4421,Brightmere Electronics,MS-2,Wireless mouse,Electronics,99.00,2026-10-11T12:00:00+04:00,2026-10-13T14:00:00+04:00,MS2-70037,0.15,,TRK-O2012,No return requested
+ORD-2013,CUS-4422,Kestrova Audio,SB-1,Soundbar,Electronics,799.00,2026-10-12T12:00:00+04:00,2026-10-14T14:00:00+04:00,SB1-70074,3.40,,TRK-O2013,No return requested
+ORD-2014,CUS-4423,Hollin Home,CP-12,Cookware set,Home,549.00,2026-10-13T12:00:00+04:00,2026-10-15T14:00:00+04:00,,6.10,,TRK-O2014,No return requested
+ORD-2015,CUS-4424,Tarvel Gadgets,PB-20,Power bank,Electronics,149.00,2026-10-14T12:00:00+04:00,2026-10-16T14:00:00+04:00,PB20-70148,0.40,,TRK-O2015,No return requested
+ORD-2016,CUS-4425,Brightmere Electronics,MN-27,27-inch monitor,Electronics,1049.00,2026-10-15T12:00:00+04:00,2026-10-17T14:00:00+04:00,MN27-70185,6.80,,TRK-O2016,No return requested
+ORD-2017,CUS-4426,Hollin Home,LM-3,Desk lamp,Home,119.00,2026-10-16T12:00:00+04:00,2026-10-18T14:00:00+04:00,,1.10,,TRK-O2017,No return requested
+ORD-2018,CUS-4427,Kestrova Audio,WH-700,Wired headphones,Electronics,229.00,2026-10-17T12:00:00+04:00,2026-10-19T14:00:00+04:00,WH700-70259,0.35,,TRK-O2018,No return requested
+ORD-2019,CUS-4428,Tarvel Gadgets,CM-8,Action camera,Electronics,1299.00,2026-10-18T12:00:00+04:00,2026-10-20T14:00:00+04:00,CM8-70296,0.30,,TRK-O2019,No return requested
+ORD-2020,CUS-4429,Hollin Home,VC-9,Vacuum cleaner,Home,899.00,2026-10-19T12:00:00+04:00,2026-10-21T14:00:00+04:00,,5.20,,TRK-O2020,No return requested
+ORD-2021,CUS-4430,Brightmere Electronics,KB-5,Keyboard,Electronics,199.00,2026-10-20T12:00:00+04:00,2026-10-22T14:00:00+04:00,KB5-70370,0.90,,TRK-O2021,No return requested
+ORD-2022,CUS-4431,Hollin Home,PL-2,Pillow pair,Home,89.00,2026-10-21T12:00:00+04:00,2026-10-23T14:00:00+04:00,,1.20,,TRK-O2022,No return requested
+ORD-2023,CUS-4432,Kestrova Audio,SPK-300,Party speaker,Electronics,1499.00,2026-10-22T12:00:00+04:00,2026-10-24T14:00:00+04:00,SPK300-70444,8.90,,TRK-O2023,No return requested
+ORD-2024,CUS-4433,Tarvel Gadgets,ER-6,E-reader,Electronics,649.00,2026-10-23T12:00:00+04:00,2026-10-25T14:00:00+04:00,ER6-70481,0.30,,TRK-O2024,No return requested
+ORD-2048,CUS-4448,Kestrova Audio,WH-900,Wireless headphones,Electronics,1299.00,2026-10-24T22:40:00+04:00,2026-10-26T14:05:00+04:00,WH900-78241,0.80,,TRK-O2048,Serial keyed in by hand: packing scanner offline

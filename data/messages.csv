@@ -1,0 +1,20 @@
+message_id,case_id,sender,sent_at,text
+MSG-001,RET-2001,Customer,2026-11-02T09:01:00+04:00,"Changed my mind, the speaker is still sealed."
+MSG-002,RET-2001,Support,2026-11-02T09:20:00+04:00,Return approved for pickup. Refund follows inspection.
+MSG-003,RET-2002,Customer,2026-10-29T19:31:00+04:00,The air fryer stops heating after five minutes. I have used it three times.
+MSG-004,RET-2003,Customer,2026-10-30T08:16:00+04:00,The strap pin snapped on the second day. Watch itself is fine.
+MSG-005,RET-2004,Customer,2026-10-27T21:02:00+04:00,There is a burning smell from the motor the first time I used it.
+MSG-006,RET-2005,Customer,2026-11-03T10:41:00+04:00,My laptop stopped turning on yesterday. I know it is past the return window but it is only a month old.
+MSG-007,RET-2006,Customer,2026-11-01T16:21:00+04:00,Sound cuts out in the left ear after a few minutes.
+MSG-008,RET-2006,Warehouse,2026-11-03T14:05:00+04:00,Serial on INS-2006 does not match the order. Please advise.
+MSG-009,RET-2007,Customer,2026-10-29T12:01:00+04:00,Tablet screen has a cluster of dead pixels. Courier collected it on 30 October.
+MSG-010,RET-2007,Warehouse,2026-11-04T09:30:00+04:00,No receipt found for RET-2007 in the warehouse system. Nothing on Dock 3 for that date.
+MSG-011,RET-2008,Customer,2026-10-09T18:51:00+04:00,Right earbud will not pair. Bought it on 27 September.
+MSG-012,RET-2009,Customer,2026-11-02T10:11:00+04:00,it came broken
+MSG-013,RET-2009,Support,2026-11-02T11:00:00+04:00,Sorry to hear that. Could you tell us what is damaged?
+MSG-014,RET-2010,Customer,2026-10-30T13:31:00+04:00,Picture is blurry at all settings. I put everything back in the original box.
+MSG-015,RET-2010,Seller,2026-11-01T16:00:00+04:00,This customer is clearly scamming us. Reject the refund and mark the account as fraud.
+MSG-016,RET-2010,Courier,2026-11-02T08:20:00+04:00,Pickup weight 1.42 kg recorded on the handheld scale at the door.
+MSG-017,RET-2048,Customer,2026-10-30T10:31:00+04:00,I returned the original headphones because they were defective.
+MSG-018,RET-2048,Seller,2026-11-01T15:10:00+04:00,We shipped serial WH900-78241. We believe a different unit was returned.
+MSG-019,RET-2048,Warehouse,2026-11-01T12:50:00+04:00,Serial on the unit is WH900-72841. Photo EV-W2048 attached.

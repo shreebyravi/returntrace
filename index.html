@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReturnTrace AI</title>
+<meta name="description" content="An AI agent prototype that investigates disputed e-commerce returns across order, courier, warehouse and policy records. Made-up data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══ RETURNTRACE DESIGN TOKENS ═══ */
+:root {
+  --font-ui: "Inter", -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --fs-0: 13px; --fs-1: 14px; --fs-2: 16px; --fs-3: 20px; --fs-4: 30px; --fs-5: 44px;
+  --lh: 1.5;
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px; --sp-7: 48px;
+  --radius: 10px; --radius-sm: 6px;
+  --bg: #F6F7F9; --bg-raise: #FFFFFF; --bg-raise-2: #F9FAFB; --bg-inset: #F2F4F7;
+  --line: #E4E7EC; --line-2: #D0D5DD;
+  --ink: #101828; --ink-2: #475467; --ink-3: #7A8698;
+  --accent: #4F46E5; --accent-ink: #FFFFFF; --accent-soft: rgba(79,70,229,.08);
+  --ok: #067647; --ok-soft: #ECFDF3;
+  --warn: #B54708; --warn-soft: #FFFAEB;
+  --danger: #B42318; --danger-soft: #FEF3F2;
+  --info: #175CD3; --info-soft: #EFF8FF;
+  --violet: #6941C6; --violet-soft: #F4F3FF;
+  --shadow: 0 1px 2px rgba(16,24,40,.05), 0 8px 24px -12px rgba(16,24,40,.12);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: var(--fs-1); line-height: var(--lh); }
+a { color: var(--accent); }
+button { font-family: inherit; }
+code, .mono { font-family: var(--font-mono); }
+h1, h2, h3 { margin: 0; line-height: 1.2; }
+[hidden] { display: none !important; }
+/* ═══ TOP BAR ═══ */
+.topbar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: var(--sp-4); padding: 10px var(--sp-5); background: rgba(255,255,255,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, var(--accent), #312E81); display: grid; place-items: center; }
+.brand-name { font-weight: 700; font-size: var(--fs-2); letter-spacing: .01em; }
+.brand-sub { color: var(--ink-3); font-size: var(--fs-0); }
+.tabs { display: flex; gap: 2px; flex-wrap: wrap; }
+.tab { background: none; border: 0; color: var(--ink-2); padding: 8px 12px; border-radius: var(--radius-sm); cursor: pointer; font-size: var(--fs-1); font-weight: 500; }
+.tab:hover { color: var(--ink); background: var(--bg-raise); }
+.tab.active { color: var(--ink); background: var(--bg-raise-2); box-shadow: inset 0 -2px 0 var(--accent); }
+.top-right { margin-left: auto; display: flex; gap: var(--sp-2); align-items: center; }
+.mode-pill { font-size: var(--fs-0); padding: 4px 10px; border-radius: 99px; border: 1px solid var(--line-2); color: var(--ink-2); }
+.mode-pill.live { border-color: var(--ok); color: var(--ok); }
+.ribbon { background: var(--bg-inset); border-bottom: 1px solid var(--line); color: var(--ink-3); font-size: var(--fs-0); padding: 6px var(--sp-5); text-align: center; }
+
+/* ═══ LAYOUT ═══ */
+main { max-width: 1440px; margin: 0 auto; padding: var(--sp-5); }
+.view { display: none; }
+.view.active { display: block; }
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp-4); margin-bottom: var(--sp-5); flex-wrap: wrap; }
+.page-head h1 { font-size: var(--fs-4); font-weight: 700; letter-spacing: -.01em; }
+.page-head p { margin: 6px 0 0; color: var(--ink-2); max-width: 760px; }
+.panel { background: var(--bg-raise); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--line); }
+.panel-title { font-size: var(--fs-0); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.panel-body { padding: var(--sp-4); }
+.grid { display: grid; gap: var(--sp-4); }
+.g2 { grid-template-columns: 1fr 1fr; }
+.g3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 1000px) { .g2, .g3 { grid-template-columns: 1fr; } }
+.muted { color: var(--ink-2); }
+.faint { color: var(--ink-3); }
+.small { font-size: var(--fs-0); }
+
+/* ═══ BUTTONS, BADGES, CHIPS ═══ */
+.btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line-2); background: var(--bg-raise-2); color: var(--ink); padding: 8px 14px; border-radius: var(--radius-sm); cursor: pointer; font-size: var(--fs-1); font-weight: 500; }
+.btn:hover { border-color: var(--ink-3); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.danger { background: var(--danger-soft); color: #B42318; border-color: rgba(217,45,32,.4); }
+.btn.ghost { background: transparent; }
+.btn.sm { padding: 5px 10px; font-size: var(--fs-0); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 99px; font-size: var(--fs-0); font-weight: 600; white-space: nowrap; border: 1px solid transparent; }
+.badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.badge.nodot::before { display: none; }
+.st-ready { color: var(--ok); background: var(--ok-soft); }
+.st-missing { color: var(--warn); background: var(--warn-soft); }
+.st-conflict { color: var(--violet); background: var(--violet-soft); }
+.st-notready { color: #B42318; background: var(--danger-soft); }
+.st-pending { color: var(--info); background: var(--info-soft); }
+.sev-critical { color: #B42318; background: var(--danger-soft); }
+.sev-major { color: var(--warn); background: var(--warn-soft); }
+.sev-minor { color: var(--ink-2); background: rgba(163,179,184,.12); }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line-2); background: var(--bg-raise); color: var(--ink-2); cursor: pointer; font-size: var(--fs-0); font-weight: 500; }
+.chip:hover { color: var(--ink); border-color: var(--ink-3); }
+.chip.active { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.chip .k { font-family: var(--font-mono); color: var(--ink); }
+.tag { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 12px; padding: 2px 7px; border-radius: 4px; background: var(--bg-inset); border: 1px solid var(--line-2); color: var(--ink-2); cursor: pointer; }
+.tag:hover { color: var(--accent); border-color: var(--accent); }
+.tag.bad { color: #B42318; border-color: rgba(217,45,32,.4); }
+
+/* ═══ STAT TILES ═══ */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--sp-3); }
+.tile { background: var(--bg-raise); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--sp-4); cursor: pointer; text-align: left; color: inherit; font: inherit; }
+.tile:hover { border-color: var(--line-2); }
+.tile .n { font-size: var(--fs-4); font-weight: 700; font-family: var(--font-mono); line-height: 1.1; }
+.tile .l { color: var(--ink-2); font-size: var(--fs-0); margin-top: 4px; }
+.tile.accent .n { color: var(--accent); }
+.tile.ok .n { color: var(--ok); } .tile.warn .n { color: var(--warn); } .tile.danger .n { color: #B42318; } .tile.violet .n { color: var(--violet); }
+
+/* ═══ TABLES ═══ */
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr.click { cursor: pointer; }
+tr.click:hover td { background: var(--bg-raise-2); }
+.meter { width: 90px; height: 6px; border-radius: 3px; background: var(--bg-inset); overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 8px; }
+.meter > i { display: block; height: 100%; background: var(--accent); }
+
+/* ═══ OVERVIEW ═══ */
+.countdown { display: flex; align-items: center; gap: var(--sp-5); padding: var(--sp-5); background: linear-gradient(120deg, rgba(79,70,229,.07), rgba(14,165,233,.04)); border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: var(--sp-4); flex-wrap: wrap; }
+.countdown .big { font-size: var(--fs-5); font-weight: 700; font-family: var(--font-mono); color: var(--accent); line-height: 1; }
+.countdown .what { font-size: var(--fs-2); }
+.dist { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--bg-inset); }
+.dist > span { display: block; height: 100%; }
+.legend { display: flex; gap: var(--sp-4); flex-wrap: wrap; margin-top: var(--sp-3); font-size: var(--fs-0); color: var(--ink-2); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.bars { display: grid; gap: 8px; }
+.bar-row { display: grid; grid-template-columns: 220px 1fr 28px; align-items: center; gap: 10px; font-size: var(--fs-0); }
+.bar-row .track { height: 10px; background: var(--bg-inset); border-radius: 5px; overflow: hidden; }
+.bar-row .track i { display: block; height: 100%; border-radius: 5px; }
+.decision { display: grid; grid-template-columns: 110px 1fr auto; gap: var(--sp-3); align-items: center; padding: var(--sp-3) 0; border-bottom: 1px solid var(--line); }
+.decision:last-child { border-bottom: 0; }
+.decision .id { font-family: var(--font-mono); font-weight: 600; }
+
+/* ═══ INVESTIGATION WORKSPACE ═══ */
+.case-chips { display: flex; gap: var(--sp-2); flex-wrap: wrap; margin-bottom: var(--sp-4); align-items: center; }
+.case-chips .lbl { font-size: var(--fs-0); color: var(--ink-3); margin-right: 4px; }
+.workspace { display: grid; grid-template-columns: 300px minmax(0,1fr) 400px; gap: var(--sp-4); align-items: start; }
+@media (max-width: 1250px) { .workspace { grid-template-columns: 1fr; } }
+.stage { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.stage b { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--bg-inset); border: 1px solid var(--line-2); color: var(--accent); font-size: 11px; letter-spacing: 0; }
+.kv { display: grid; grid-template-columns: 96px 1fr; gap: 4px 10px; font-size: var(--fs-0); }
+.kv dt { color: var(--ink-3); } .kv dd { margin: 0; }
+.src-list { display: grid; gap: 6px; }
+.src { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--bg-inset); cursor: pointer; font-size: var(--fs-0); }
+.src:hover { border-color: var(--accent); }
+.src .t { font-family: var(--font-mono); color: var(--ink); }
+.src .why { color: var(--ink-3); }
+.src.possible { border-style: dashed; }
+.rule-row { display: grid; grid-template-columns: 18px 1fr; gap: 8px; font-size: var(--fs-0); padding: 5px 0; }
+.dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; }
+.dot.pass { background: var(--ok); } .dot.fail { background: var(--danger); } .dot.unclear { background: var(--warn); }
+.run-meta { font-size: var(--fs-0); color: var(--ink-2); background: var(--bg-inset); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 8px 12px; margin-bottom: var(--sp-3); }
+.run-meta b { color: var(--ink); }
+.timeline { position: relative; display: grid; gap: 10px; }
+.step { position: relative; display: grid; grid-template-columns: 28px 1fr; gap: 10px; }
+.step .num { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--bg-raise-2); border: 1px solid var(--line-2); font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); }
+.step.ok .num { border-color: rgba(79,70,229,.5); color: var(--accent); }
+.step.err .num { border-color: var(--danger); color: var(--danger); }
+.step.final .num { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.step .card { border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--bg-inset); padding: 10px 12px; min-width: 0; }
+.step .tool { font-family: var(--font-mono); font-weight: 600; color: var(--ink); }
+.step .arg { font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); word-break: break-word; }
+.step .res { font-size: var(--fs-0); color: var(--ink-2); margin-top: 4px; }
+.step details summary { cursor: pointer; font-size: 12px; color: var(--ink-3); margin-top: 6px; }
+.step pre { white-space: pre-wrap; word-break: break-word; font-size: 12px; max-height: 260px; overflow: auto; background: #F2F4F7; padding: 8px; border-radius: 4px; color: var(--ink-2); }
+.step.reveal { animation: rise .35s ease both; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.thinking { display: flex; align-items: center; gap: 10px; color: var(--ink-2); font-size: var(--fs-0); padding: 8px 0; }
+.spinner { width: 16px; height: 16px; border: 2px solid var(--line-2); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.empty { text-align: center; color: var(--ink-3); padding: var(--sp-6) var(--sp-4); font-size: var(--fs-0); }
+
+/* findings */
+.rec { padding: var(--sp-4); border-radius: var(--radius-sm); border: 1px solid var(--line-2); background: var(--bg-inset); margin-bottom: var(--sp-3); }
+.rec .lab { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); }
+.rec .status-big { font-size: var(--fs-3); font-weight: 700; margin-top: 4px; }
+.refused { border: 1px solid var(--danger); background: var(--danger-soft); color: #912018; border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: var(--sp-3); font-weight: 600; font-size: var(--fs-0); }
+.guard { border: 1px solid rgba(220,104,3,.45); background: var(--warn-soft); color: #93370D; border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: var(--sp-3); font-size: var(--fs-0); }
+.guard.okk { border-color: rgba(3,152,85,.35); background: var(--ok-soft); color: #05603A; }
+.exc { border: 1px solid var(--line); border-left: 3px solid var(--line-2); border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 8px; background: var(--bg-raise-2); }
+.exc.critical { border-left-color: var(--danger); } .exc.major { border-left-color: var(--warn); } .exc.minor { border-left-color: var(--ink-3); }
+.exc .head { display: flex; justify-content: space-between; gap: 8px; align-items: center; margin-bottom: 4px; }
+.exc .ttl { font-weight: 600; }
+.exc .fnd { font-size: var(--fs-0); color: var(--ink-2); }
+.exc .who { font-size: 12px; color: var(--ink-3); margin-top: 6px; }
+.exc .ev { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+.field { margin-bottom: var(--sp-3); }
+.field .lab { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); margin-bottom: 4px; }
+.draft { background: var(--bg-inset); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 12px; font-size: var(--fs-0); white-space: pre-wrap; }
+textarea, input[type=text], input[type=password], input[type=search], select { width: 100%; background: var(--bg-inset); color: var(--ink); border: 1px solid var(--line-2); border-radius: var(--radius-sm); padding: 8px 10px; font-family: inherit; font-size: var(--fs-1); }
+textarea { min-height: 140px; resize: vertical; }
+.review-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: var(--sp-3); }
+.boundary { font-size: 12px; color: var(--ink-3); margin-top: var(--sp-3); border-top: 1px dashed var(--line-2); padding-top: var(--sp-2); }
+.outcome { margin-top: var(--sp-3); font-size: var(--fs-0); padding: 8px 12px; border-radius: var(--radius-sm); background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(79,70,229,.35); }
+
+/* ═══ STORY ═══ */
+.hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: var(--sp-6); align-items: center; padding: var(--sp-6) 0 var(--sp-6); }
+@media (max-width: 1000px) { .hero { grid-template-columns: 1fr; } }
+.eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: .16em; color: var(--accent); font-weight: 600; }
+.hero h1 { font-size: 44px; letter-spacing: -.02em; margin: 12px 0 16px; line-height: 1.1; }
+.hero p.lead { font-size: 18px; color: var(--ink-2); margin: 0 0 var(--sp-5); max-width: 620px; }
+.hero-cta { display: flex; gap: 10px; flex-wrap: wrap; }
+.section { margin: var(--sp-7) 0; }
+.section h2 { font-size: 26px; margin-bottom: 8px; }
+.section > p.sub { color: var(--ink-2); margin: 0 0 var(--sp-5); max-width: 780px; }
+.flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp-3); }
+@media (max-width: 1000px) { .flow { grid-template-columns: 1fr; } }
+.flow .f { background: var(--bg-raise); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--sp-4); }
+.flow .f .k { font-family: var(--font-mono); color: var(--accent); font-size: 12px; }
+.flow .f h3 { font-size: var(--fs-2); margin: 6px 0; }
+.flow .f p { margin: 0; color: var(--ink-2); font-size: var(--fs-0); }
+.flow .f .who { margin-top: 10px; font-size: 12px; color: var(--ink-3); }
+.quote { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; color: var(--ink-2); margin: 0; }
+.cardlist { display: grid; gap: var(--sp-3); }
+.contact { display: flex; gap: var(--sp-4); align-items: center; justify-content: space-between; flex-wrap: wrap; }
+footer { border-top: 1px solid var(--line); color: var(--ink-3); font-size: var(--fs-0); padding: var(--sp-5); text-align: center; margin-top: var(--sp-7); }
+
+/* ═══ MODALS ═══ */
+.modal-back { position: fixed; inset: 0; background: rgba(16,24,40,.45); z-index: 50; display: grid; place-items: center; padding: var(--sp-4); }
+.modal { width: min(860px, 100%); max-height: 88vh; display: flex; flex-direction: column; background: var(--bg-raise); border: 1px solid var(--line-2); border-radius: var(--radius); box-shadow: var(--shadow); }
+.modal .panel-body { overflow: auto; }
+.doc-lines { font-family: var(--font-mono); font-size: 13px; }
+.doc-lines .ln { display: grid; grid-template-columns: 40px 1fr; gap: 10px; padding: 1px 6px; border-radius: 3px; white-space: pre-wrap; word-break: break-word; }
+.doc-lines .ln span:first-child { color: var(--ink-3); text-align: right; user-select: none; }
+.doc-lines .ln.hl { background: rgba(250,204,21,.28); }
+.doc-lines .ln[dir=rtl] span:last-child { direction: rtl; }
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--bg-raise-2); border: 1px solid var(--line-2); padding: 10px 16px; border-radius: var(--radius-sm); z-index: 60; box-shadow: var(--shadow); font-size: var(--fs-0); }
+
+/* quality */
+.verdict-sel { width: auto; padding: 5px 8px; font-size: var(--fs-0); }
+.pill-ok { color: var(--ok); } .pill-bad { color: #B42318; } .pill-warn { color: var(--warn); }
+.improve { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); }
+@media (max-width: 1000px) { .improve { grid-template-columns: 1fr; } }
+.improve > div { background: var(--bg-inset); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: var(--sp-3); font-size: var(--fs-0); }
+.improve h4 { margin: 0 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
+ul.limits { margin: 0; padding-left: 18px; color: var(--ink-2); }
+ul.limits li { margin-bottom: 6px; }
+@media (max-width: 700px) { main { padding: var(--sp-4); } .hero h1 { font-size: 32px; } .bar-row { grid-template-columns: 130px 1fr 24px; } .decision { grid-template-columns: 1fr; } }
+
+/* ReturnTrace additions */
+.st-refund { color: var(--ok); background: var(--ok-soft); }
+.st-replace { color: var(--info); background: var(--info-soft); }
+.st-evidence { color: var(--warn); background: var(--warn-soft); }
+.st-escalate { color: var(--violet); background: var(--violet-soft); }
+.st-reject { color: var(--danger); background: var(--danger-soft); }
+.st-none { color: var(--ink-2); background: var(--bg-inset); }
+.cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); }
+@media (max-width: 1000px) { .cols3 { grid-template-columns: 1fr; } }
+.fact { font-size: var(--fs-0); padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.fact:last-child { border-bottom: 0; }
+.fact .ev { display: inline-flex; flex-wrap: wrap; gap: 4px; margin-left: 4px; }
+.draftbox { border: 1px dashed var(--line-2); border-radius: var(--radius-sm); padding: 10px 12px; background: var(--bg-raise-2); font-size: var(--fs-0); margin-top: 8px; }
+.draftbox .to { font-weight: 600; }
+.tline { display: grid; grid-template-columns: 150px 1fr; gap: 8px; font-size: var(--fs-0); padding: 3px 0; }
+.tline .when { font-family: var(--font-mono); color: var(--ink-2); font-size: 12px; }
+.tline.bad { color: var(--danger); }
+.hero-card td, .hero-card th { padding: 8px 12px; }
+body .tile .n { color: var(--ink); }
+.tile.accent .n { color: var(--accent); } .tile.ok .n { color: var(--ok); } .tile.warn .n { color: var(--warn); } .tile.danger .n { color: var(--danger); } .tile.violet .n { color: var(--violet); }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h13l3 3v7H3z"/><path d="M9 7V4h6"/><circle cx="7" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/><path d="m14 12-2-2 2-2"/></svg>
+    </div>
+    <div>
+      <div class="brand-name">ReturnTrace AI</div>
+      <div class="brand-sub">Dunvale Market returns (fictional)</div>
+    </div>
+  </div>
+  <nav class="tabs" aria-label="Sections">
+    <button class="tab" data-view="story">Story</button>
+    <button class="tab" data-view="dashboard">Dashboard</button>
+    <button class="tab" data-view="queue">Case queue</button>
+    <button class="tab" data-view="investigate">Investigation</button>
+    <button class="tab" data-view="review">Review and audit</button>
+    <button class="tab" data-view="evaluation">Evaluation</button>
+  </nav>
+  <div class="top-right">
+    <span class="mode-pill" id="modePill">Recorded examples</span>
+    <button class="btn sm" id="openSettings">Settings</button>
+  </div>
+</header>
+<div class="ribbon">Prototype with made-up data. The marketplace, sellers, courier and customers are fictional. No refund, rejection or message happens in this tool, and it never labels a customer.</div>
+
+<main>
+<!-- ═══ STORY ═══ -->
+<section class="view" id="view-story">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">For marketplace returns investigation teams</div>
+      <h1>The records exist.<br>The answer is scattered.</h1>
+      <p class="lead">ReturnTrace investigates disputed returns across the order, courier, warehouse, messages and policy. It builds a cited timeline, separates what is confirmed from what conflicts or is missing, and recommends one next step for a person to decide. It never refunds, rejects or accuses anyone.</p>
+      <div class="hero-cta">
+        <button class="btn primary" data-go="investigate/RET-2048">See an investigation</button>
+        <button class="btn" data-go="queue">Open the case queue</button>
+      </div>
+    </div>
+    <div class="panel hero-card">
+      <div class="panel-head"><span class="panel-title">Case RET-2048 · headphones, AED 1,299</span><span class="badge st-evidence">Needs evidence</span></div>
+      <div class="panel-body" style="padding:0">
+        <table>
+          <thead><tr><th>Source</th><th>What it says</th></tr></thead>
+          <tbody>
+            <tr><td>Seller dispatch</td><td>Serial <span class="mono">WH900-78241</span> <span class="small" style="color:var(--warn)">keyed by hand, no scan</span></td></tr>
+            <tr><td>Courier</td><td>Picked up 0.82 kg, delivered to warehouse</td></tr>
+            <tr><td>Warehouse</td><td>0.81 kg, serial <span class="mono" style="color:var(--danger)">WH900-72841</span>, "appears used"</td></tr>
+            <tr><td>Customer</td><td>"I returned the original headphones"</td></tr>
+            <tr><td>Seller</td><td>"A different unit was returned"</td></tr>
+          </tbody>
+        </table>
+        <div class="small muted" style="padding:12px 16px">Two digits are swapped, and only one side has a photo. Who is right? Today a specialist opens five systems to find out.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Two-minute walkthrough</h2>
+    <p class="sub">Narrated with an AI voice. It shows the recorded examples on this page.</p>
+    <video controls preload="none" poster="video/poster.jpg" style="width:100%;max-width:960px;border-radius:var(--radius);border:1px solid var(--line);background:#000;display:block">
+      <source src="video/returntrace-walkthrough.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="section">
+    <h2>The problem</h2>
+    <p class="sub">A return passes through the customer, the courier, the warehouse and the seller, and each keeps its own record. When those records disagree, someone has to rebuild what happened before anyone can decide fairly.</p>
+    <div class="grid g3">
+      <div class="panel"><div class="panel-body"><h3 style="font-size:var(--fs-2);margin-bottom:6px">Disputes are rising</h3><p class="muted small" style="margin:0">In the Merchant Risk Council's 2025 global survey, 57% of merchants reported an increase in refund and policy abuse, and 47% named refund abuse their top fraud attack. These are global figures, not UAE ones.</p></div></div>
+      <div class="panel"><div class="panel-body"><h3 style="font-size:var(--fs-2);margin-bottom:6px">The evidence is split</h3><p class="muted small" style="margin:0">Order system, courier tracking, warehouse inspection, support messages and policy versions: each answers part of the question, in a different place.</p></div></div>
+      <div class="panel"><div class="panel-body"><h3 style="font-size:var(--fs-2);margin-bottom:6px">Fairness cuts both ways</h3><p class="muted small" style="margin:0">Refunding too easily costs the seller. Denying a genuine customer, or accusing them, costs trust. A careful, evidenced decision protects both.</p></div></div>
+    </div>
+    <p class="small faint" style="margin-top:10px">Source: <a href="https://merchantriskcouncil.org/2025/07/22/21/05/refund-policy-abuse-remains-the-top-fraud-threat" target="_blank" rel="noopener">Merchant Risk Council, 22 July 2025</a>. What we don't know: how often evidence-conflicting disputes happen in UAE marketplaces, or what they cost to investigate.</p>
+  </div>
+
+  <div class="section">
+    <h2>What already exists, and the gap</h2>
+    <p class="sub">Returns software is a crowded market, so ReturnTrace doesn't try to be another returns portal or fraud score.</p>
+    <div class="panel"><div class="table-scroll"><table>
+      <thead><tr><th>Already solved</th><th>Examples</th><th>What they do</th></tr></thead>
+      <tbody>
+        <tr><td>Return portals and automation</td><td>Loop Returns, AfterShip Returns, Narvar</td><td class="muted">Self-service returns, eligibility rules, exchanges, tracking</td></tr>
+        <tr><td>Return risk scoring</td><td>Loop Returns fraud tools</td><td class="muted">Score risk as returns are submitted and hold critical-risk returns before money goes out</td></tr>
+        <tr><td>Marketplace-native disputes</td><td>Amazon, noon</td><td class="muted">Their own return, refund and seller-dispute processes, on their own data</td></tr>
+      </tbody>
+    </table></div></div>
+    <div class="panel" style="margin-top:var(--sp-4)"><div class="panel-body">
+      <b>Our hypothesis:</b> <span class="muted">scoring decides which returns look risky; it doesn't investigate the ones that end up disputed. ReturnTrace is an investigator-first workspace for those cases: it pulls the evidence together, chooses what to check next, and drafts a neutral, cited recommendation. We have not confirmed that existing products lack this, and no returns team has tested it.</span>
+    </div></div>
+  </div>
+
+  <div class="section">
+    <h2>How it works</h2>
+    <p class="sub">Code does everything exact. The agent does what needs reading and judgement. A person decides.</p>
+    <div class="flow">
+      <div class="f"><div class="k">01 CHECK</div><h3>Exact checks</h3><p>Code checks the return window and policy version, courier events, receipt, inspection, serial, weight and timeline in UTC.</p><div class="who">Automatic, no AI</div></div>
+      <div class="f"><div class="k">02 INVESTIGATE</div><h3>Follow the evidence</h3><p>The agent retrieves records and, when it finds a contradiction, looks for the scan or photo that could settle it.</p><div class="who">Agent, with tools</div></div>
+      <div class="f"><div class="k">03 SEPARATE</div><h3>Facts vs conflicts</h3><p>Confirmed facts, contradictions and missing evidence are listed apart, each with its source and an exact quote.</p><div class="who">Agent, checked by code</div></div>
+      <div class="f"><div class="k">04 RECOMMEND</div><h3>One next step</h3><p>Refund or replacement review, more evidence, or escalation. Rejection only when the policy clearly isn't met and nothing is open.</p><div class="who">Agent proposes</div></div>
+      <div class="f"><div class="k">05 DECIDE</div><h3>A person decides</h3><p>The specialist accepts, asks for evidence, escalates or rejects the recommendation, with a reason. Everything is logged.</p><div class="who">Person decides</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Why it can be trusted with this job</h2>
+    <div class="grid g2">
+      <div class="panel"><div class="panel-body cardlist small">
+        <div><b>It never accuses anyone.</b> <span class="muted">Code blocks any answer that calls a customer dishonest, and the agent refuses requests to label an account.</span></div>
+        <div><b>It shows its evidence.</b> <span class="muted">Every finding cites a record and an exact quote; code checks each quote against the source.</span></div>
+        <div><b>It doesn't do the maths.</b> <span class="muted">Windows, policy versions, time zones, serials, weights and refund amounts are calculated by code.</span></div>
+      </div></div>
+      <div class="panel"><div class="panel-body cardlist small">
+        <div><b>It can't move money.</b> <span class="muted">There is no refund, rejection or send action. Requests are drafts.</span></div>
+        <div><b>It escalates when it should.</b> <span class="muted">Two policy versions that disagree, a courier and warehouse that disagree, or a system that doesn't respond all go to a person.</span></div>
+        <div><b>Its steps are real.</b> <span class="muted">Every tool call and result on screen was logged by code, not described by the model.</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>What this prototype is, and isn't</h2>
+    <div class="panel"><div class="panel-body small muted">
+      A fictional UAE marketplace with 25 orders, 11 return cases, 67 courier events, 9 inspections, 15 scans and photos, 19 messages and three versioned policies, with a separate answer key. The answers shown are recorded examples: real Claude Sonnet sessions that called this app's own tools, recorded on 12 November 2026. Add your own Anthropic API key in Settings to run it live. It isn't connected to any marketplace, courier or warehouse system, and no returns team has used it. See the <a href="#evaluation">evaluation</a> for results and limits.
+    </div></div>
+  </div>
+
+  <div class="section">
+    <div class="panel"><div class="panel-body contact">
+      <div><b>Built as an independent product exploration</b> <span class="muted">by Shree Byravi.</span></div>
+      <a class="btn" href="https://www.linkedin.com/in/shree-byravi/" target="_blank" rel="noopener">LinkedIn</a>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══ DASHBOARD ═══ -->
+<section class="view" id="view-dashboard">
+  <div class="page-head"><div><h1>Returns investigation dashboard</h1><p>Dunvale Market (fictional). Open cases, what they are waiting for, and what needs a person.</p></div></div>
+  <div class="tiles" id="tiles"></div>
+  <div class="grid g2" style="margin-top:var(--sp-4)">
+    <div class="panel"><div class="panel-head"><span class="panel-title">High priority, unresolved</span><span class="small faint">By value and age</span></div><div class="panel-body" id="priority"></div></div>
+    <div class="grid">
+      <div class="panel"><div class="panel-head"><span class="panel-title">Recommended next actions</span></div><div class="panel-body"><div class="dist" id="dist"></div><div class="legend" id="distLegend"></div></div></div>
+      <div class="panel"><div class="panel-head"><span class="panel-title">Exceptions by category</span><span class="small faint">Code checks and recorded investigations</span></div><div class="panel-body"><div class="bars" id="bars"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ QUEUE ═══ -->
+<section class="view" id="view-queue">
+  <div class="page-head"><div><h1>Case queue</h1><p>Every return case. Click a row to investigate it.</p></div><div style="width:280px"><input type="search" id="qSearch" placeholder="Search case, order, item or reason"></div></div>
+  <div class="case-chips" id="qFilters"></div>
+  <div class="panel"><div class="table-scroll"><table id="qTable"></table></div></div>
+</section>
+
+<!-- ═══ INVESTIGATE ═══ -->
+<section class="view" id="view-investigate">
+  <div class="page-head"><div><h1>Investigation</h1><p>Pick a case. The agent decides which records to retrieve, and every step it took is shown in the middle.</p></div></div>
+  <div class="case-chips" id="caseChips"></div>
+  <div class="workspace">
+    <div class="grid">
+      <div class="panel"><div class="panel-head"><span class="stage"><b>1</b>Case</span><span id="caseBadge"></span></div><div class="panel-body" id="caseInfo"></div></div>
+      <div class="panel"><div class="panel-head"><span class="stage"><b>2</b>Source records</span><span class="small faint">Click to open</span></div><div class="panel-body" id="caseSources"></div></div>
+    </div>
+    <div class="grid">
+      <div class="panel"><div class="panel-head"><span class="panel-title">Code checks</span><span id="checkStatus"></span></div><div class="panel-body" id="caseChecks"></div></div>
+      <div class="panel">
+        <div class="panel-head"><span class="stage"><b>3</b>Investigation steps</span><div style="display:flex;gap:6px"><button class="btn sm" id="replayBtn">Replay</button><button class="btn sm primary" id="liveBtn">Run live</button></div></div>
+        <div class="panel-body"><div id="runMeta"></div><div class="timeline" id="timeline"></div><div id="drafts"></div></div>
+      </div>
+    </div>
+    <div class="panel"><div class="panel-head"><span class="stage"><b>4</b>Findings</span><span class="stage"><b>5</b>Review</span></div><div class="panel-body" id="findings"></div></div>
+  </div>
+</section>
+
+<!-- ═══ REVIEW ═══ -->
+<section class="view" id="view-review">
+  <div class="page-head"><div><h1>Review and audit</h1><p>Every recommendation and the decision a person made on it. Nothing is refunded, rejected or sent from here: decisions are recorded for the people who act on them.</p></div><button class="btn sm ghost" id="resetReview">Reset my decisions</button></div>
+  <div class="case-chips" id="rFilters"></div>
+  <div class="panel"><div class="table-scroll"><table id="rTable"></table></div></div>
+  <div class="panel" style="margin-top:var(--sp-4)"><div class="panel-head"><span class="panel-title">Audit trail</span><span class="small faint">Saved in this browser only</span></div><div class="panel-body" id="audit"></div></div>
+</section>
+
+<!-- ═══ EVALUATION ═══ -->
+<section class="view" id="view-evaluation">
+  <div class="page-head"><div><h1>Evaluation</h1><p>How the agent did against the answer key. Code compares findings and actions with the seeded cases; a person judges each eval case.</p></div></div>
+  <div class="tiles" id="eTiles"></div>
+  <div class="panel" style="margin-top:var(--sp-4)"><div class="panel-head"><span class="panel-title">Eval cases</span><span class="small faint" id="verdictNote"></span></div><div class="table-scroll"><table id="evalTable"></table></div></div>
+  <div class="panel" style="margin-top:var(--sp-4)"><div class="panel-head"><span class="panel-title">All seeded cases vs the answer key</span><span class="small faint">data/ground_truth.json</span></div><div class="table-scroll"><table id="truthTable"></table></div></div>
+  <div class="panel" style="margin-top:var(--sp-4)"><div class="panel-head"><span class="panel-title">Stress tests</span><span class="small faint">Trick inputs the agent should survive</span></div><div class="table-scroll"><table id="stressTable"></table></div></div>
+  <div class="panel" style="margin-top:var(--sp-4)" id="improvePanel"><div class="panel-head"><span class="panel-title">One improvement, on the record</span></div><div class="panel-body" id="improve"></div></div>
+  <div class="panel" style="margin-top:var(--sp-4)"><div class="panel-head"><span class="panel-title">Known limits</span></div><div class="panel-body"><ul class="limits">
+    <li>One fictional marketplace with 11 return cases. Scans and photos are text descriptions, not images.</li>
+    <li>It investigates one case at a time. It doesn't look for patterns across a customer's or seller's history, by design.</li>
+    <li>Policies are a simplified, made-up set. Real marketplaces have seller-specific policies and category rules.</li>
+    <li>Recorded answers come from one run per case. Answers vary between runs; a pilot would need repeated runs and a person checking a sample.</li>
+    <li>No returns team has used it, and nothing is connected to a real order, courier or warehouse system.</li>
+  </ul></div></div>
+</section>
+</main>
+
+<footer>ReturnTrace AI, a prototype with synthetic data. All names are fictional and any resemblance is accidental. <a href="https://github.com/shreebyravi/returntrace" target="_blank" rel="noopener">Source</a></footer>
+
+<div class="modal-back" id="settingsModal" hidden>
+  <div class="modal">
+    <div class="panel-head"><span class="panel-title">Settings</span><button class="btn sm ghost" data-close>Close</button></div>
+    <div class="panel-body">
+      <p class="small muted" style="margin-top:0">Without a key, the page shows recorded examples. With your own Anthropic API key, "Run live" calls Claude directly from your browser. The key is saved only in this browser (localStorage) and is never written into any file.</p>
+      <label class="small faint" for="keyInput">Anthropic API key</label>
+      <input type="password" id="keyInput" placeholder="sk-ant-..." autocomplete="off">
+      <div class="review-bar"><button class="btn primary" id="saveKey">Save key</button><button class="btn" id="clearKey">Remove key</button><span class="small" id="keyState" style="align-self:center"></span></div>
+      <p class="small faint">Model: <span class="mono" id="modelName"></span>. A live investigation makes about 6 to 14 calls and costs a few cents.</p>
+    </div>
+  </div>
+</div>
+<div class="modal-back" id="docModal" hidden>
+  <div class="modal">
+    <div class="panel-head"><span class="panel-title" id="docTitle">Record</span><button class="btn sm ghost" data-close>Close</button></div>
+    <div class="panel-body"><div class="small faint" id="docNote" style="margin-bottom:8px"></div><div class="doc-lines" id="docBody"></div></div>
+  </div>
+</div>
+<div class="modal-back" id="editModal" hidden>
+  <div class="modal">
+    <div class="panel-head"><span class="panel-title" id="editTitle">Decision</span><button class="btn sm ghost" data-close>Close</button></div>
+    <div class="panel-body">
+      <div id="editFields"></div>
+      <div class="review-bar"><button class="btn primary" id="editSave">Record decision</button><button class="btn" data-close>Cancel</button></div>
+      <div class="boundary">Recording a decision doesn't refund, reject or send anything. It is logged for the people who act on it.</div>
+    </div>
+  </div>
+</div>
+
+<script src="app/data.js"></script>
+<script src="app/engine.js"></script>
+<script src="app/app.js"></script>
+</body>
+</html>

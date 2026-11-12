@@ -1,0 +1,12 @@
+{
+ "return_id": "RET-2001",
+ "name": "Warehouse system doesn't respond",
+ "expected_action": "Escalate to specialist",
+ "expected": "Reports that the inspection couldn't be retrieved, does not recommend a refund, and escalates so a person can retry.",
+ "overlay": {
+  "failTools": [
+   "get_warehouse_inspection"
+  ]
+ },
+ "id": "S-04"
+}

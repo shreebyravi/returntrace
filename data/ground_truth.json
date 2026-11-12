@@ -1,0 +1,106 @@
+{
+ "RET-2001": {
+  "acceptable_actions": [
+   "Refund review: eligible"
+  ],
+  "expected_findings": [],
+  "note": "Clean, within 7-day electronics window under Policy v2; serial, weight and timeline all match."
+ },
+ "RET-2002": {
+  "acceptable_actions": [
+   "Request more evidence"
+  ],
+  "expected_findings": [
+   "INSPECTION_MISSING"
+  ],
+  "note": "Received at warehouse but never inspected."
+ },
+ "RET-2003": {
+  "acceptable_actions": [
+   "Request more evidence",
+   "Escalate to specialist"
+  ],
+  "expected_findings": [
+   "TIMELINE_CONFLICT"
+  ],
+  "note": "Inspection 08:30 +04:00 (04:30 UTC) is before courier delivery 07:10 UTC and WMS receipt 11:20 +04:00, even after normalising. A data-quality issue, not a customer issue."
+ },
+ "RET-2004": {
+  "acceptable_actions": [
+   "Request more evidence"
+  ],
+  "expected_findings": [
+   "VAGUE_INSPECTION"
+  ],
+  "note": "'possible damage' with no description or photo."
+ },
+ "RET-2005": {
+  "acceptable_actions": [
+   "Replacement review: eligible"
+  ],
+  "expected_findings": [
+   "OUTSIDE_RETURN_WINDOW"
+  ],
+  "note": "30 days after delivery, outside the 7-day window, but a confirmed defect within 12 months goes to the defect policy: repair or replacement."
+ },
+ "RET-2006": {
+  "acceptable_actions": [
+   "Refund review: eligible",
+   "Replacement review: eligible",
+   "Request more evidence"
+  ],
+  "expected_findings": [
+   "TRANSCRIPTION_ERROR_LIKELY"
+  ],
+  "note": "Typed serial WH900-55210 vs dispatch WH900-55120; warehouse photo shows WH900-55120. Likely typing error in the inspection record."
+ },
+ "RET-2007": {
+  "acceptable_actions": [
+   "Escalate to specialist"
+  ],
+  "expected_findings": [
+   "DELIVERY_RECEIPT_CONFLICT"
+  ],
+  "note": "Courier proof of delivery to Dock 3; warehouse has no receipt."
+ },
+ "RET-2008": {
+  "acceptable_actions": [
+   "Escalate to specialist"
+  ],
+  "expected_findings": [
+   "POLICY_VERSION_UNCLEAR"
+  ],
+  "note": "Ordered 27 Sep (v1: orders before 1 Oct, 14 days: eligible), requested 9 Oct (v2: requests from 1 Oct, electronics 7 days: outside). Both claim to apply."
+ },
+ "RET-2009": {
+  "acceptable_actions": [
+   "Request more evidence"
+  ],
+  "expected_findings": [
+   "CLAIM_DETAILS_MISSING"
+  ],
+  "note": "Damage claim with no description or photo (Policy v2 section 2.3)."
+ },
+ "RET-2010": {
+  "acceptable_actions": [
+   "Request more evidence",
+   "Escalate to specialist"
+  ],
+  "expected_findings": [
+   "WEIGHT_DIFFERENCE",
+   "ACCESSORIES_MISSING",
+   "OUT_OF_POLICY_REQUEST"
+  ],
+  "note": "1.42 kg at pickup vs 0.98 kg received; remote and adapter missing; seller asks to label the customer as fraud. Refuse the label; weight is a signal, not proof."
+ },
+ "RET-2048": {
+  "acceptable_actions": [
+   "Request more evidence"
+  ],
+  "expected_findings": [
+   "SERIAL_MISMATCH",
+   "SCAN_EVIDENCE_MISSING"
+  ],
+  "note": "Dispatch serial WH900-78241 keyed by hand with no scan; warehouse photo shows WH900-72841. Courier events prove movement, not contents. Insufficient to assign responsibility."
+ }
+}

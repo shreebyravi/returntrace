@@ -1,0 +1,16 @@
+evidence_id,type,linked_to,captured_at,content
+EV-D2001,Dispatch packing scan,ORD-2001,2026-10-27T09:12:00+04:00,Barcode scan of serial label: SPK200-11842
+EV-W2001,Warehouse photo,RET-2001,2026-11-04T13:08:00+04:00,Photo of sealed box. Serial label readable: SPK200-11842
+EV-D2003,Dispatch packing scan,ORD-2003,2026-10-26T10:30:00+04:00,Barcode scan of serial label: SW40-60219
+EV-W2003,Warehouse photo,RET-2003,2026-11-01T08:28:00+04:00,Photo of watch with broken strap pin. Serial on case back: SW40-60219
+EV-D2005,Dispatch packing scan,ORD-2005,2026-10-03T09:00:00+04:00,Barcode scan of serial label: LT14-90551
+EV-W2005,Warehouse photo,RET-2005,2026-11-05T13:55:00+04:00,Photo of laptop base. Serial label: LT14-90551. No visible damage.
+EV-D2006,Dispatch packing scan,ORD-2006,2026-10-28T08:40:00+04:00,Barcode scan of serial label: WH900-55120
+EV-W2006,Warehouse photo,RET-2006,2026-11-03T13:50:00+04:00,Photo of headphone band label. Serial printed: WH900-55120
+EV-D2007,Dispatch packing scan,ORD-2007,2026-10-25T11:20:00+04:00,Barcode scan of serial label: TB10-33710
+EV-D2008,Dispatch packing scan,ORD-2008,2026-09-28T09:45:00+04:00,Barcode scan of serial label: EB3-40882
+EV-W2008,Warehouse photo,RET-2008,2026-10-12T12:25:00+04:00,Photo of earbud case. Serial label: EB3-40882
+EV-D2010,Dispatch packing scan,ORD-2010,2026-10-24T10:05:00+04:00,"Barcode scan of serial label: PJ5-30417. Packing checklist ticked: projector, remote control, power adapter, HDMI cable"
+EV-W2010,Warehouse photo,RET-2010,2026-11-01T14:10:00+04:00,Photo of open box: projector and HDMI cable visible; remote control slot and adapter slot empty
+EV-W2048,Warehouse photo,RET-2048,2026-11-01T12:35:00+04:00,Photo of headphone band label. Serial printed: WH900-72841
+EV-C2048,Courier pickup photo,RET-2048,2026-10-31T07:19:00Z,Photo of sealed parcel at customer door. Contents not visible.

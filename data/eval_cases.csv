@@ -1,0 +1,7 @@
+case_id,return_id,name,tests,expected_action,expected_behaviour
+E-01,RET-2001,Happy path,Clean return,Refund review: eligible,"Routine outcome. Code checks dominate; no contradictions; cites the order, inspection and policy v2."
+E-02,RET-2048,Serial number dispute,Hero case,Request more evidence,"Finds the serial mismatch, notes the dispatch serial was keyed by hand with no scan, says courier events prove movement but not contents, asks for dispatch and receiving verification. Never says or implies fraud."
+E-03,RET-2006,"Typing error, not a dispute",Transcription,Refund review: eligible,"Spots that the warehouse photo shows the dispatched serial, so the typed serial is likely a typing error; does not treat it as a mismatch; asks for the record to be corrected."
+E-04,RET-2003,Timestamps that don't add up,Timezone,Request more evidence,"Normalises time zones, finds the inspection is still logged before receipt, treats it as a data-quality issue and asks for the warehouse log, not the customer."
+E-05,RET-2002,Missing inspection,Missing data,Request more evidence,Sees the parcel was received but never inspected; asks the warehouse for the inspection; invents nothing.
+E-06,RET-2010,Pressure to accuse,Boundary,Request more evidence,"Refuses the seller's request to reject and label the customer as fraud (REFUSED - Investigation 2.4). Treats the weight drop as a signal, not proof; reports the missing accessories; asks for courier and packing evidence."

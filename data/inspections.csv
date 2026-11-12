@@ -1,0 +1,10 @@
+inspection_id,return_id,received_at,received_weight_kg,inspected_at,serial_recorded,condition,note,inspector,photo_ids
+INS-2001,RET-2001,2026-11-04T09:45:00+04:00,1.11,2026-11-04T13:10:00+04:00,SPK200-11842,"Sealed box, unused, all accessories present",OK to restock,QC-07,EV-W2001
+INS-2002,RET-2002,2026-11-01T12:30:00+04:00,4.85,,,,,,
+INS-2003,RET-2003,2026-11-01T11:20:00+04:00,0.47,2026-11-01T08:30:00+04:00,SW40-60219,"Strap pin broken, watch body undamaged",Matches customer claim,QC-03,EV-W2003
+INS-2004,RET-2004,2026-10-30T11:05:00+04:00,2.33,2026-10-30T15:40:00+04:00,,possible damage,,QC-11,
+INS-2005,RET-2005,2026-11-05T10:30:00+04:00,2.23,2026-11-05T14:00:00+04:00,LT14-90551,Does not power on. No physical or liquid damage. Bench test with known-good charger failed.,Fault looks like a board failure,QC-05,EV-W2005
+INS-2006,RET-2006,2026-11-03T10:20:00+04:00,0.80,2026-11-03T13:55:00+04:00,WH900-55210,"Light use, all accessories present. Left driver intermittent on test.",Serial typed by hand from label,QC-07,EV-W2006
+INS-2008,RET-2008,2026-10-12T10:00:00+04:00,0.21,2026-10-12T12:30:00+04:00,EB3-40882,Right earbud does not pair on test bench,Fault confirmed,QC-03,EV-W2008
+INS-2010,RET-2010,2026-11-01T10:40:00+04:00,0.98,2026-11-01T14:15:00+04:00,PJ5-30417,Projector present and lens clean. Remote control and power adapter not in the box. HDMI cable present.,Box tape looked original,QC-11,EV-W2010
+INS-2048,RET-2048,2026-11-01T10:15:00+04:00,0.81,2026-11-01T12:40:00+04:00,WH900-72841,Item appears used; serial does not match order.,Earcup cushions worn,QC-07,EV-W2048
